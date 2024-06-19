@@ -55,6 +55,72 @@ public class TestaCaixa {
 }
 ```
 
+# Funções Lambda
+Simplificam o código para torná-lo mais legível e conciso. As funções lambda são usadas principalmente para definir implementações de interfaces funcionais, 
+que são interfaces com um único método abstrato.
+Exemplo de uso de função lambda:
+``` java
+    List<Integer> lista = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
+
+    for(Integer i: lista) {
+      if(i % 2 == 0) {
+        System.out.println(i);
+      }
+}
+```
+Utilizando uma função lambda:
+``` java
+    List<Integer> lista = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
+    
+    lista.stream().filter(i -> i % 2 == 0).forEach(System.out::println);
+```
+No código acima, criamos um stream da nossa lista, filtramos esse stream para incluir apenas os números pares (isso é feito pela função lambda i -> i % 2 == 0), 
+e finalmente usamos o método forEach para printar cada elemento do stream filtrado.
+
+Outros exemplos de funções lambda:
+``` java
+List<Integer> numeros = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+
+List<Integer> numerosPares = numeros.stream()
+                                   .filter(n -> n % 2 == 0)
+                                   .collect(Collectors.toList());
+
+System.out.println(numerosPares); // Output: [2, 4, 6, 8, 10]
+```
+``` java
+List<String> palavras = Arrays.asList("Java", "Stream", "Operações", "Intermediárias");
+
+List<Integer> tamanhos = palavras.stream()
+                                .map(s -> s.length())
+                                .collect(Collectors.toList());
+
+System.out.println(tamanhos); // Output: [4, 6, 11, 17]
+```
+``` java
+List<String> nomes = Arrays.asList("João", "Maria", "Pedro", "Ana");
+
+nomes.stream()
+     .forEach(nome -> System.out.println("Olá, " + nome + "!"));
+
+// Output:
+// Olá, João!
+// Olá, Maria!
+// Olá, Pedro!
+// Olá, Ana!
+```
+``` java
+List<Integer> numeros = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+
+Set<Integer> numerosPares = numeros.stream()
+                                   .filter(n -> n % 2 == 0)
+                                   .collect(Collectors.toSet());
+
+System.out.println(numerosPares); // Output: [2, 4, 6, 8, 10]
+```
+
+
+
+
 
 
 
