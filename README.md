@@ -130,6 +130,209 @@ dadosClientes.stream()
 .limit(5);
 ```
 
+# Datas
+Para trabalhar com datas, podemos importar o pacote que possui diversas classes de data e hora, o java.time.
+Os formatos de data e hora são especificados por strings padrão de data e hora
+Exemplo:
+```java
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class Datas {
+
+    public static void main(String[] args) {
+
+        String pattern = "E, dd MMM yyyy HH:mm:ss z";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        String date = simpleDateFormat.format(new Date());
+        System.out.println(date);
+
+    }
+}
+```
+
+O output seria:  sáb., 19 nov. 2022 02:58:14 BRT”:
+
+LocalDate: representa uma data sem fuso horário no sistema do calendário ISO 8601 tem como formato padrão yyyy-MM-dd. Essa classe não armazena 
+ou representa uma hora ou fuso horário. Em vez disso, é uma descrição da data, normalmente usada para aniversários.
+
+```java
+import java.time.LocalDate;
+
+public class Datas {
+
+    public static void main(String[] args) {
+
+        LocalDate hoje = LocalDate.now();
+        System.out.println(hoje);
+
+    }
+}
+```
+O código acima cria um objeto LocalDate que representa a data atual e imprime a data no formato yyyy-MM-dd.
+
+
+
+Criando datas:
+
+Agora, vamos criar uma nova data para representar a data de um aniversário. Para isso, importaremos o pacote java.time.month;
+```java
+import java.time.LocalDate;
+import java.time.Month;
+
+public class Datas {
+    
+    public static void main(String[] args) {
+
+        LocalDate hoje = LocalDate.now();
+        System.out.println(hoje);
+
+        LocalDate aniversarioAlice = LocalDate.of(2005, Month.SEPTEMBER, 15);
+        System.out.println(aniversarioAlice);
+    }
+}
+```
+O código acima cria um objeto LocalDate que representa a data de aniversário de Alice e imprime a data no formato yyyy-MM-dd. (2005-09-15)
+
+
+
+Também podemos brincar com esse código e calcular a idade atual da aniversariante. Uma forma de fazer isso na mão seria subtraindo o método getYear das datas, dessa forma:
+```java
+import java.time.LocalDate;
+import java.time.Month;
+
+public class Datas {
+    public static void main(String[] args) {
+        LocalDate hoje = LocalDate.now();
+        System.out.println(hoje);
+
+        LocalDate aniversarioAlice = LocalDate.of(2005, Month.SEPTEMBER, 15);
+        System.out.println(aniversarioAlice);
+
+        int idade =  hoje.getYear() - aniversarioAlice.getYear();
+        System.out.println(idade);
+    }
+
+}
+```
+
+O resultado também será:
+2022-11-19
+2005-09-15
+17
+
+
+Período:
+Ao executar esse código temos o resultado esperado, que neste caso é 17 anos. Mas e se quiséssemos descobrir a diferença de dias e meses também? 
+Daria pra fazer da mesma forma utilizando o get, no entanto, existe algo pronto para nos ajudarmos. Nesse caso, podemos utilizar a classe Period.
+
+Para saber a diferença entre duas datas podemos utilizar seu método between, da seguinte forma:
+```java
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.Period;
+
+public class Datas {
+    public static void main(String[] args) {
+        LocalDate hoje = LocalDate.now();
+        System.out.println(hoje);
+
+        LocalDate aniversarioAlice = LocalDate.of(2005, Month.SEPTEMBER, 15);
+        System.out.println(aniversarioAlice);
+
+        int idade = aniversarioAlice.getYear() - hoje.getYear();
+        System.out.println(idade);
+
+        Period periodo = Period.between(hoje, aniversarioAlice);
+        System.out.println(periodo);
+
+    }
+}
+```
+
+
+LocalTime:
+O local time representa um horário, seu formato padrão é hh:mm:ss.zzz.
+
+Horário atual
+Assim como fizemos com o LocalDate, dessa vez vamos imprimir o horário atual:
+```java
+import java.time.LocalTime;
+
+public class Horarios {
+
+    public static void main(String[] args) {
+        LocalTime hoje = LocalTime.now();
+        System.out.println(hoje);
+    }
+}
+```
+
+Criando horários:
+Agora, vamos criar um novo horário para representar as horas em que Alice nasceu:
+```java
+import java.time.LocalTime;
+
+public class Horarios {
+
+    public static void main(String[] args) {
+        LocalTime hoje = LocalTime.now();
+        System.out.println(hoje);
+
+        LocalTime aniversarioHoraAlice = LocalTime.of(22, 33, 15);
+        System.out.println(aniversarioHoraAlice);
+    }
+}
+```
+22:33:15 
+
+
+LocalDateTime
+
+O LocalDateTime representa uma data com a hora, visto como ano-mês-dia-hora-minuto-segundo. O tempo é representado como yyyy-MM-dd-HH-mm-ss.zzz.
+```java
+import java.time.LocalDateTime;
+
+public class DataHorario {
+
+    public static void main(String[] args) {
+        LocalDateTime hoje = LocalDateTime.now();
+        System.out.println(hoje);
+    }
+}
+```
+2022-11-19T04:11:17.108565200
+
+
+DateTimeFormatter
+Você deve ter notado que os resultados estão em formatos que não estamos acostumados a trabalhar. Podemos então trabalhar com diversos formatadores de datas existentes!
+
+``` java
+DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss");
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+public class Formatando {
+
+    public static void main(String[] args) {
+        LocalDateTime hoje = LocalDateTime.now();
+        System.out.println(hoje);
+
+        DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss");
+        LocalDateTime agora = LocalDateTime.now();
+        System.out.println(hoje.format(formatador));
+
+    }
+}
+```
+
+19/11/2022 04:38:11
+
+
+
+
+
 
 
 
