@@ -118,6 +118,18 @@ Set<Integer> numerosPares = numeros.stream()
 System.out.println(numerosPares); // Output: [2, 4, 6, 8, 10]
 ```
 
+Uso > 
+Você trabalha desenvolvendo aplicações em um banco digital e uma de suas tarefas é gerenciar e analisar de maneira eficiente uma enorme quantidade de dados referentes aos investimentos e saldos dos clientes, a fim de que se possa oferecer a eles linhas de crédito apropriadas ao saldo que possuem em conta.
+Neste contexto, você deve filtrar os clientes com conta-corrente e ordená-los considerando o saldo, ordenando do maior para o menor, e, então, exibir os cinco clientes com maior saldo em conta.
+Considerando que a variável dadosClientes já está populada com a lista completa de clientes e que os métodos para obter o tipo da conta e o saldo são o getTipoConta() e getSaldo(), respectivamente, qual dos seguintes códigos fará a funcionalidade corretamente?
+
+``` java
+dadosClientes.stream()
+.filter(c -> c.getTipoConta().equalsIgnoreCase("corrente"))
+.sorted(Comparator.comparingDouble(Conta::getSaldo).reversed())
+.limit(5);
+```
+
 
 
 
