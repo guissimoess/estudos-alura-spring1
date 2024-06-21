@@ -130,6 +130,37 @@ dadosClientes.stream()
 .limit(5);
 ```
 
+## Streams infinitos
+Streams infinitos, ou “infinite Streams”, são streams que não têm um tamanho definido. Eles são úteis quando queremos gerar uma sequência de números ou valores. Aqui está um exemplo de como criamos um Stream infinito com o método iterate:
+``` java
+Stream.iterate(0, n -> n + 1)
+     .limit(10)
+     .forEach(System.out::println);
+```
+
+## FlatMap
+O método flatMap é uma operação intermediária que é usada para transformar um Stream de coleções em um Stream de elementos. Aqui está um exemplo de como o flatMap é usado:
+``` java
+List<List<String>> list = List.of(
+  List.of("a", "b"),
+  List.of("c", "d")
+);
+
+Stream<String> stream = list.stream()
+  .flatMap(Collection::stream);
+
+stream.forEach(System.out::println);
+```
+
+## Redução de streams
+Stream.reduce() é uma operação terminal que é utilizada para reduzir o conteúdo de um Stream para um único valor.
+``` java
+List<Integer> numbers = List.of(1, 2, 3, 4, 5);
+Optional<Integer> result = numbers.stream().reduce(Integer::sum);
+result.ifPresent(System.out::println); //prints 15
+```
+No exemplo acima, somamos todos os números da lista usando o método reduce().
+
 # Datas
 Para trabalhar com datas, podemos importar o pacote que possui diversas classes de data e hora, o java.time.
 Os formatos de data e hora são especificados por strings padrão de data e hora
@@ -328,6 +359,65 @@ public class Formatando {
 ```
 
 19/11/2022 04:38:11
+
+# Optional
+Optional é uma classe introduzida no Java 8 que permite tratar valores nulos de forma mais segura e eficiente.
+O Optional é uma maneira de representar um valor que pode ou não estar presente. 
+Ele fornece métodos para verificar se um valor está presente, obter o valor se ele estiver presente e executar ações com base na presença ou ausência do valor.
+``` java
+        Optional<Episodio> episodioBuscado = episodios.stream()
+                .filter(e -> e.getTitulo().toUpperCase().contains(trechoTitulo.toUpperCase()))
+                .findFirst();
+
+        if (episodioBuscado.isPresent()) {
+            System.out.println("Episódio encontrado: " + episodioBuscado.get());
+        } else {
+            System.out.println("Episódio não encontrado.");
+        }
+```
+No exemplo acima, estamos usando o método findFirst() para encontrar o primeiro episódio cujo título contém o trecho especificado.
+O resultado é um Optional que pode conter um episódio ou não.
+
+Como usar o Optional?
+Vamos criar um método que pode retornar um valor null. Sem o Optional, ele pode causar erros indesejados, mas com o Optional, ele é mais seguro:
+``` java
+public Optional<String> getNome() {
+    // O nome pode ser null
+    return Optional.ofNullable(nome);
+}
+```
+
+Aqui, Optional.ofNullable(nome) criará um Optional que contém o valor de nome se ele não for null. Se for null, ele criará um Optional vazio.
+
+Agora, para acessar valor dentro do Optional, podemos usar ifPresent e orElse assim:
+``` java
+Optional<String> optionalNome = getNome();
+
+optionalNome.ifPresent(System.out::println); // Só irá printar o nome se não for null
+
+String nome = optionalNome.orElse("Nome não disponível"); // Irá retornar "Nome não disponível" caso nome seja null
+```
+
+Melhores práticas
+Embora o Optional seja um aliado útil, há algumas coisas que devem ser levadas em consideração para usá-lo de maneira eficaz:
+
+Prefira o retorno Optional em vez de retornar null: Isso torna suas intenções claras e evita erros.
+Não use Optional.get() sem Optional.isPresent(): O Optional.get() lançará um erro se o valor não estiver presente. Portanto, é melhor verificar antes se o valor está presente.
+Não use Optional para campos da classe ou parâmetros do método: O Optional deve ser usado principalmente para retornos de métodos que podem não ter valor.
+
+Utilizando o Stream API e o conceito de Maps, peek, findFirst e demais recursos', como você criaria um fluxo que filtra as transações com valores superiores a 5000, imprime uma espécie de log com peek, busca a primeira destas transações encontradas e coleta os resultados em um Set?
+
+``` java
+transacoes.stream()
+ .filter(t -> t.getValor() > 5000)
+ .peek(System.out::println)
+ .collect(Collectors.toSet()).stream()
+ .findFirst();
+```
+
+
+
+
 
 
 
